@@ -42,19 +42,7 @@ func main() {
 	muxrouter.HandleFunc("/api/metrics", routes.apiMetricsRoute)
 	muxrouter.HandleFunc("/api/weather", routes.weatherRoute)
 
-	// Handle static content, we have to explicitly put our top level dirs in here
-	// - otherwise the NotFoundHandler will catch them
-	fileServer := http.FileServer(http.Dir(contentDir))
-	muxrouter.PathPrefix("/js").Handler(http.StripPrefix("/", fileServer))
-	muxrouter.PathPrefix("/css").Handler(http.StripPrefix("/", fileServer))
-	muxrouter.PathPrefix("/img").Handler(http.StripPrefix("/", fileServer))
-	muxrouter.PathPrefix("/favicon.ico").Handler(http.StripPrefix("/", fileServer))
-
-	// EVERYTHING else redirect to index.html
-	muxrouter.NotFoundHandler = http.HandlerFunc(routes.spaIndexRoute)
-
 	// Start server
 	fmt.Printf("### Starting server listening on %v\n", serverPort)
-	fmt.Printf("### Serving static content from '%v'\n", contentDir)
 	http.ListenAndServe(":"+serverPort, muxrouter)
 }

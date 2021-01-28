@@ -22,6 +22,7 @@ server/server.exe
 
 # secrets, ssssh!
 **/.env
+**/.env.production
 
 # unit test reports, yawn!
 **/report.xml
