@@ -6,6 +6,7 @@ services:
   server:
     build: ./server
     container_name: server-go
+    image: alexitouno19/vuego-demoapp-server-go:latest
     ports:
       - 4000:4000
     networks: 
@@ -16,6 +17,7 @@ services:
   front:
     build: ./spa
     container_name: front-vue
+    image: alexitouno19/vuego-demoapp-front-vue:latest
     ports:
       - 8000:80
     depends_on:
