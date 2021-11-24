@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 networks:
   app-connection:
     driver: bridge
@@ -7,15 +7,20 @@ services:
     build: ./server
     container_name: server-go
     ports:
-      - 8000:4000
+      - 4000:4000
     networks: 
       - app-connection
+    environment:
+      - IPSTACK_API_KEY=${IPSTACK_API_KEY}
+      - WEATHER_API_KEY=${WEATHER_API_KEY}
   front:
     build: ./spa
     container_name: front-vue
     ports:
-      - 8080:80
+      - 8000:80
     depends_on:
       - server
     networks:
       - app-connection
+    environment:
+      - VUE_APP_API_ENDPOINT=${VUE_APP_API_ENDPOINT}
